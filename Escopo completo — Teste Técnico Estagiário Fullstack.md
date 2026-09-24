@@ -939,7 +939,7 @@ A aplicação será considerada funcional quando:
 - [x] Criar repositório GitHub
 - [x] Criar estrutura do projeto
 - [x] Configurar Git
-- [x] Criar `.gitignore`
+- [ ] Criar `.gitignore` (parcial: presente na branch backend; falta padronizar na branch frontend)
 - [x] Criar README inicial
 
 ---
@@ -1019,7 +1019,7 @@ A aplicação será considerada funcional quando:
 
 - [x] Revisar código
 - [x] Remover código desnecessário
-- [x] Revisar `.gitignore`
+- [ ] Revisar `.gitignore` (parcial: falta uniformizar o arquivo entre as branches)
 - [x] Criar `.env.example`
 - [x] Atualizar README
 - [x] Executar projeto do zero
@@ -1036,6 +1036,7 @@ A aplicação será considerada funcional quando:
 - Os testes do backend, validação e tratamento de erros foram automatizados e aprovados;
 - A interface foi validada manualmente no navegador, mas ainda não há uma suíte automatizada de testes do frontend;
 - A atualização local desta checklist ainda precisa ser enviada ao GitHub;
+- O `.gitignore` está presente na branch `backend`; a branch `frontend` ainda precisa de uma revisão equivalente;
 - A branch `main` permanece somente com a documentação, conforme a organização atual do repositório.
 
 # 27. Estrutura final esperada
