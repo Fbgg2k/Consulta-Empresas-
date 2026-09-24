@@ -939,7 +939,7 @@ A aplicação será considerada funcional quando:
 - [x] Criar repositório GitHub
 - [x] Criar estrutura do projeto
 - [x] Configurar Git
-- [ ] Criar `.gitignore` (parcial: presente na branch backend; falta padronizar na branch frontend)
+- [x] Criar `.gitignore`
 - [x] Criar README inicial
 
 ---
@@ -1011,7 +1011,7 @@ A aplicação será considerada funcional quando:
 - [x] Testes do backend
 - [x] Testes de validação
 - [x] Testes de erros
-- [ ] Testes do frontend, se houver tempo
+- [x] Testes do frontend, se houver tempo
 
 ---
 
@@ -1019,7 +1019,7 @@ A aplicação será considerada funcional quando:
 
 - [x] Revisar código
 - [x] Remover código desnecessário
-- [ ] Revisar `.gitignore` (parcial: falta uniformizar o arquivo entre as branches)
+- [x] Revisar `.gitignore`
 - [x] Criar `.env.example`
 - [x] Atualizar README
 - [x] Executar projeto do zero
@@ -1034,9 +1034,10 @@ A aplicação será considerada funcional quando:
 
 - As etapas 1 a 6 foram concluídas e verificadas nos commits e branches do projeto;
 - Os testes do backend, validação e tratamento de erros foram automatizados e aprovados;
-- A interface foi validada manualmente no navegador, mas ainda não há uma suíte automatizada de testes do frontend;
+- A interface foi validada manualmente no navegador e também por uma suíte automatizada com Vitest, Testing Library e jsdom;
 - A atualização local desta checklist ainda precisa ser enviada ao GitHub;
-- O `.gitignore` está presente na branch `backend`; a branch `frontend` ainda precisa de uma revisão equivalente;
+- O `.gitignore` está presente e padronizado nas branches `frontend` e `backend`;
+- A suíte do frontend possui 9 testes aprovados; o commit `ca033c7` ainda precisa ser enviado ao GitHub;
 - A branch `main` permanece somente com a documentação, conforme a organização atual do repositório.
 
 # 27. Estrutura final esperada
