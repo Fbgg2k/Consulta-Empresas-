@@ -892,28 +892,43 @@ Testar:
 
 A aplicação será considerada funcional quando:
 
-- [ ] O usuário conseguir informar um CNPJ;
-- [ ] O CNPJ for validado no frontend;
-- [ ] O CNPJ for validado no backend;
-- [ ] O frontend chamar o backend;
-- [ ] O backend chamar a BrasilAPI;
-- [ ] Os dados da empresa forem retornados;
-- [ ] Razão social for exibida;
-- [ ] Nome fantasia for exibido;
-- [ ] Situação cadastral for exibida;
-- [ ] CNAE principal for exibido;
-- [ ] Data de abertura for exibida;
-- [ ] Endereço completo for exibido;
-- [ ] Loading for exibido durante a consulta;
-- [ ] CNPJ inválido for tratado;
-- [ ] Empresa inexistente for tratada;
-- [ ] Falha da API for tratada;
-- [ ] Últimas 5 consultas forem armazenadas;
-- [ ] Interface funcionar em desktop;
-- [ ] Interface funcionar em mobile;
-- [ ] Código estiver organizado;
-- [ ] `.env` não estiver no Git;
-- [ ] README estiver documentado.
+- [x] O usuário conseguir informar um CNPJ;
+- [x] O CNPJ for validado no frontend;
+- [x] O CNPJ for validado no backend;
+- [x] O frontend chamar o backend;
+- [x] O backend chamar a BrasilAPI;
+- [x] Os dados da empresa forem retornados;
+- [x] Razão social for exibida;
+- [x] Nome fantasia for exibido;
+- [x] Situação cadastral for exibida;
+- [x] CNAE principal for exibido;
+- [x] Data de abertura for exibida;
+- [x] Endereço completo for exibido;
+- [x] Loading for exibido durante a consulta;
+- [x] CNPJ inválido for tratado;
+- [x] Empresa inexistente for tratada;
+- [x] Falha da API for tratada;
+- [x] Últimas 5 consultas forem armazenadas;
+- [x] Interface funcionar em desktop;
+- [x] Interface funcionar em mobile;
+- [x] Código estiver organizado;
+- [x] `.env` não estiver no Git;
+- [x] README estiver documentado.
+
+### Evidências da validação
+
+- Frontend executado em `http://localhost:5173` e backend em `http://localhost:3001`;
+- Consulta real validada com `27.865.757/0001-02`;
+- Resposta real da BrasilAPI validada com código HTTP `200`;
+- CNPJ inválido validado com resposta HTTP `400`;
+- Empresa inexistente validada com resposta HTTP `404`;
+- Falha da BrasilAPI validada com resposta HTTP `503`;
+- Loading, mensagens de erro e reconsulta pelo histórico verificados no navegador;
+- Histórico limitado a cinco registros por teste automatizado no navegador;
+- Interface verificada visualmente em viewport desktop (1296px) e mobile (375px);
+- Frontend aprovado pelo lint e pelo build de produção;
+- Backend aprovado pelos testes automatizados;
+- `.env` não versionado; apenas arquivos `.env.example` presentes.
 
 ---
 
