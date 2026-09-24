@@ -20,6 +20,9 @@ O frontend conversa somente com a API do backend; a BrasilAPI nao e acessada dir
 - JavaScript;
 - CSS;
 - Fetch API;
+- Vitest;
+- Testing Library;
+- jsdom;
 - Oxlint.
 
 ## Pre-requisitos
@@ -54,6 +57,8 @@ npm run dev
 | `npm run build` | Gera a versao de producao em `dist/` |
 | `npm run preview` | Serve localmente o build de producao |
 | `npm run lint` | Executa o Oxlint |
+| `npm test` | Executa a suíte de testes do frontend com Vitest |
+| `npm run test:watch` | Executa os testes em modo interativo |
 
 ## Variaveis de ambiente
 
@@ -125,6 +130,25 @@ O frontend apresenta a mensagem recebida e trata tambem falhas de rede quando o 
 As consultas validas sao armazenadas no navegador com a chave `historicoCnpj`.
 O item mais recente fica no inicio da lista, CNPJs repetidos sao reposicionados e a lista e limitada a cinco itens.
 Nenhum dado de autenticacao ou informacao sensivel e armazenado.
+
+## Testes automatizados
+
+A suíte do frontend cobre:
+
+- normalização, máscara e validação de CNPJ;
+- limite e deduplicação do histórico;
+- validação antes da chamada à API;
+- estado de loading;
+- exibição dos dados da empresa;
+- tratamento de mensagem de erro.
+
+Execute:
+
+```bash
+npm test
+```
+
+A configuração utiliza Vitest, Testing Library e jsdom em `vitest.config.js`.
 
 ## Build de producao
 
