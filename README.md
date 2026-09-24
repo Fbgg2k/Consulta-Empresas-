@@ -331,6 +331,7 @@ Resposta de sucesso:
 ```json
 {
   "empresa": {
+    "cnpj": "27865757000102",
     "razao_social": "Empresa Exemplo LTDA",
     "nome_fantasia": "Empresa Exemplo",
     "descricao_situacao_cadastral": "ATIVA",
