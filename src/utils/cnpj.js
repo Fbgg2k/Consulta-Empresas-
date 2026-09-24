@@ -1,5 +1,5 @@
-function onlyDigits(value) {
-  return String(value ?? '').replace(/\D/g, '');
+export function onlyDigits(value) {
+  return String(value ?? '').replace(/\D/g, '')
 }
 
 function calculateDigit(digits, weights) {
@@ -12,7 +12,7 @@ function calculateDigit(digits, weights) {
   return remainder < 2 ? 0 : 11 - remainder
 }
 
-function isValidCnpj(value) {
+export function isValidCnpj(value) {
   const cnpj = onlyDigits(value)
 
   if (cnpj.length !== 14 || /^(\d)\1{13}$/.test(cnpj)) {
@@ -28,7 +28,24 @@ function isValidCnpj(value) {
   return firstDigit === Number(cnpj[12]) && secondDigit === Number(cnpj[13])
 }
 
-module.exports = {
-  onlyDigits,
-  isValidCnpj,
+export function formatCnpj(value) {
+  const digits = onlyDigits(value).slice(0, 14)
+
+  if (digits.length <= 2) {
+    return digits
+  }
+
+  if (digits.length <= 5) {
+    return `${digits.slice(0, 2)}.${digits.slice(2)}`
+  }
+
+  if (digits.length <= 8) {
+    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5)}`
+  }
+
+  if (digits.length <= 12) {
+    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8)}`
+  }
+
+  return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8, 12)}-${digits.slice(12)}`
 }

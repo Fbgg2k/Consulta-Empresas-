@@ -1,31 +1,32 @@
-# Backend - Consulta de Empresas
+# Frontend - Consulta de Empresas
 
-API Node.js responsavel por validar CNPJs, consultar a BrasilAPI e disponibilizar os dados para o frontend.
+Aplicacao React criada com Vite para consultar dados publicos de empresas a partir do CNPJ.
+O frontend conversa somente com a API do backend; a BrasilAPI nao e acessada diretamente pelo navegador.
 
-## Responsabilidades
+## Funcionalidades
 
-- Receber consultas no endpoint `/api/empresas/:cnpj`;
-- Validar o CNPJ no servidor, independentemente da validacao do frontend;
-- Consultar a BrasilAPI com timeout de 10 segundos;
-- Traduzir falhas externas para respostas HTTP consistentes;
-- Controlar as origens permitidas por CORS;
-- Disponibilizar um health check para verificar se o servico esta ativo.
+- Mascara automatica no formato `00.000.000/0000-00`;
+- Validacao local do CNPJ, incluindo os digitos verificadores;
+- Consulta ao backend com estados de carregamento, sucesso e erro;
+- Exibicao da razao social, nome fantasia, situacao cadastral, CNAE e endereco;
+- Historico das ultimas 5 consultas usando `localStorage`;
+- Reconsulta ao selecionar um item do historico;
+- Layout responsivo para desktop, tablet e mobile.
 
 ## Tecnologias
 
-- Node.js;
-- Express 5;
-- Axios;
-- CORS;
-- dotenv;
-- Supertest e Node Test Runner para testes;
-- Nodemon para desenvolvimento.
+- React 19;
+- Vite;
+- JavaScript;
+- CSS;
+- Fetch API;
+- Oxlint.
 
 ## Pre-requisitos
 
-- Node.js 18 ou superior;
+- Node.js 20.19 ou superior;
 - npm;
-- Acesso de rede para a BrasilAPI, exceto durante os testes automatizados.
+- Backend em execucao, por padrao em `http://localhost:3001`.
 
 ## Instalacao e execucao
 
@@ -37,56 +38,54 @@ npm install
 npm run dev
 ```
 
-O servidor inicia por padrao em `http://localhost:3001`.
-Para executar sem o Nodemon:
+Abra `http://localhost:5173` no navegador. O backend deve ser iniciado em outro terminal:
 
 ```bash
-npm start
+cd backend
+npm install
+npm run dev
 ```
-
-## Configuracao
-
-Crie um arquivo `.env` dentro desta pasta quando precisar alterar os valores padrao:
-
-```env
-PORT=3001
-BRASIL_API_URL=https://brasilapi.com.br/api/cnpj/v1
-FRONTEND_URL=http://localhost:5173
-```
-
-`FRONTEND_URL` pode receber varias origens separadas por virgula. Quando nao informado,
-o backend permite `http://localhost:5173`.
-
-O arquivo `.env` nao deve ser versionado. Em producao, defina as variaveis no ambiente de execucao.
 
 ## Scripts disponiveis
 
 | Comando | Descricao |
 | --- | --- |
-| `npm run dev` | Inicia o servidor com reinicio automatico usando Nodemon |
-| `npm start` | Inicia o servidor em modo normal |
-| `npm test` | Executa os testes automatizados |
+| `npm run dev` | Inicia o servidor de desenvolvimento do Vite |
+| `npm run build` | Gera a versao de producao em `dist/` |
+| `npm run preview` | Serve localmente o build de producao |
+| `npm run lint` | Executa o Oxlint |
 
-## Endpoints
+## Variaveis de ambiente
 
-### Health check
+O frontend usa `http://localhost:3001` quando `VITE_API_URL` nao estiver definida.
+Para apontar para outro backend, crie um arquivo `.env` nesta pasta:
 
-```http
-GET /health
+```env
+VITE_API_URL=http://localhost:3001
 ```
 
-Resposta `200 OK`:
+Depois de alterar uma variavel, reinicie o servidor do Vite.
 
-```json
-{
-  "status": "ok"
-}
+## Organizacao do codigo
+
+```text
+src/
+├── components/       Componentes de interface reutilizaveis
+├── pages/            Paginas da aplicacao
+├── services/         Comunicacao com a API do backend
+├── utils/            Validacao, mascara e historico do CNPJ
+├── App.jsx           Componente raiz
+├── main.jsx          Ponto de entrada do React
+└── index.css         Estilos globais e responsividade
 ```
 
-### Consulta de empresa
+O fluxo principal esta em `src/pages/Home.jsx`: valida o valor informado, solicita a empresa ao backend,
+atualiza o resultado e registra consultas bem-sucedidas no historico.
+
+## API consumida
 
 ```http
-GET /api/empresas/:cnpj
+GET {VITE_API_URL}/api/empresas/:cnpj
 ```
 
 O parametro pode conter pontuacao, pois o backend remove caracteres nao numericos antes da validacao.
@@ -96,84 +95,44 @@ Exemplo:
 curl http://localhost:3001/api/empresas/27865757000102
 ```
 
-Resposta `200 OK`:
+Em caso de sucesso, o backend retorna os dados dentro da propriedade `empresa`:
 
 ```json
 {
-  "empresa": {
-    "razao_social": "Empresa Exemplo LTDA",
-    "nome_fantasia": "Empresa Exemplo",
-    "descricao_situacao_cadastral": "ATIVA"
-  }
+	"empresa": {
+		"razao_social": "Empresa Exemplo LTDA",
+		"nome_fantasia": "Empresa Exemplo",
+		"descricao_situacao_cadastral": "ATIVA"
+	}
 }
 ```
 
-Os demais campos sao repassados conforme retornados pela BrasilAPI, incluindo dados de CNAE,
-datas e endereco.
-
-## Tratamento de erros
-
-Todas as falhas da API usam o formato:
+Erros seguem o formato:
 
 ```json
 {
-  "error": {
-    "code": "CODIGO_DO_ERRO",
-    "message": "Mensagem explicando o problema."
-  }
+	"error": {
+		"code": "INVALID_CNPJ",
+		"message": "CNPJ invalido. Informe um CNPJ valido."
+	}
 }
 ```
 
-| Status | Codigo | Situacao |
-| --- | --- | --- |
-| `400` | `INVALID_CNPJ` | CNPJ ausente, com quantidade incorreta de digitos ou digitos verificadores invalidos |
-| `404` | `COMPANY_NOT_FOUND` | A BrasilAPI nao encontrou a empresa |
-| `404` | `ROUTE_NOT_FOUND` | Rota solicitada nao existe |
-| `502` | `BRASILAPI_ERROR` | A BrasilAPI respondeu com erro |
-| `503` | `BRASILAPI_UNAVAILABLE` | Timeout ou falha de comunicacao com a BrasilAPI |
-| `500` | `INTERNAL_ERROR` | Erro interno nao previsto |
+O frontend apresenta a mensagem recebida e trata tambem falhas de rede quando o backend nao esta disponivel.
 
-Em `NODE_ENV=production`, erros internos com status 500 nao expoem a mensagem original.
+## Historico
 
-## Organizacao do codigo
+As consultas validas sao armazenadas no navegador com a chave `historicoCnpj`.
+O item mais recente fica no inicio da lista, CNPJs repetidos sao reposicionados e a lista e limitada a cinco itens.
+Nenhum dado de autenticacao ou informacao sensivel e armazenado.
 
-```text
-src/
-├── controllers/       Entrada HTTP e orquestracao da consulta
-├── errors/            Classe de erros de aplicacao
-├── middlewares/       CORS, rota inexistente e tratamento de erros
-├── routes/            Definicao das rotas HTTP
-├── services/          Integracao com a BrasilAPI
-├── utils/             Normalizacao e validacao do CNPJ
-└── app.js             Configuracao do Express
-
-server.js              Inicializacao do servidor HTTP
-tests/                 Testes da API e dos cenarios de erro
-```
-
-O service usa a URL configurada em `BRASIL_API_URL` e possui timeout de 10 segundos.
-Os testes substituem essa URL por um servidor HTTP local para nao depender da BrasilAPI real.
-
-## Testes
+## Build de producao
 
 ```bash
-npm test
+npm run lint
+npm run build
+npm run preview
 ```
 
-Os testes cobrem o health check, CNPJ invalido, resposta de sucesso e empresa inexistente.
-
-## Fluxo da aplicacao
-
-```text
-Frontend
-   -> GET /api/empresas/:cnpj
-Express
-   -> valida e normaliza o CNPJ
-Service
-   -> GET BrasilAPI /api/cnpj/v1/:cnpj
-Backend
-   -> devolve { empresa } ou um erro padronizado
-```
-
-O backend nao possui banco de dados: o historico das consultas e uma responsabilidade do frontend,
-mantida localmente no navegador.
+O build gerado em `dist/` pode ser publicado em um servidor estatico. Nesse ambiente,
+configure `VITE_API_URL` antes da compilacao para apontar para a API publicada.
