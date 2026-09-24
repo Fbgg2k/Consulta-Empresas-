@@ -936,99 +936,107 @@ A aplicação será considerada funcional quando:
 
 ## Etapa 1 — Preparação
 
-- [ ] Criar repositório GitHub
-- [ ] Criar estrutura do projeto
-- [ ] Configurar Git
-- [ ] Criar `.gitignore`
-- [ ] Criar README inicial
+- [x] Criar repositório GitHub
+- [x] Criar estrutura do projeto
+- [x] Configurar Git
+- [x] Criar `.gitignore`
+- [x] Criar README inicial
 
 ---
 
 ## Etapa 2 — Backend
 
-- [ ] Inicializar Node.js
-- [ ] Instalar Express
-- [ ] Instalar Axios
-- [ ] Instalar CORS
-- [ ] Criar servidor
-- [ ] Criar rota
-- [ ] Criar controller
-- [ ] Criar service BrasilAPI
-- [ ] Criar validação de CNPJ
-- [ ] Implementar tratamento de erros
-- [ ] Testar endpoint
+- [x] Inicializar Node.js
+- [x] Instalar Express
+- [x] Instalar Axios
+- [x] Instalar CORS
+- [x] Criar servidor
+- [x] Criar rota
+- [x] Criar controller
+- [x] Criar service BrasilAPI
+- [x] Criar validação de CNPJ
+- [x] Implementar tratamento de erros
+- [x] Testar endpoint
 
 ---
 
 ## Etapa 3 — Frontend
 
-- [ ] Criar projeto React + Vite
-- [ ] Criar Header
-- [ ] Criar página Home
-- [ ] Criar SearchForm
-- [ ] Criar CompanyCard
-- [ ] Criar Loading
-- [ ] Criar ErrorMessage
-- [ ] Criar SearchHistory
-- [ ] Criar service da API
-- [ ] Implementar consulta
+- [x] Criar projeto React + Vite
+- [x] Criar Header
+- [x] Criar página Home
+- [x] Criar SearchForm
+- [x] Criar CompanyCard
+- [x] Criar Loading
+- [x] Criar ErrorMessage
+- [x] Criar SearchHistory
+- [x] Criar service da API
+- [x] Implementar consulta
 
 ---
 
 ## Etapa 4 — Integração
 
-- [ ] Conectar frontend ao backend
-- [ ] Testar CNPJ válido
-- [ ] Testar CNPJ inválido
-- [ ] Testar empresa inexistente
-- [ ] Testar erro da API
-- [ ] Testar loading
+- [x] Conectar frontend ao backend
+- [x] Testar CNPJ válido
+- [x] Testar CNPJ inválido
+- [x] Testar empresa inexistente
+- [x] Testar erro da API
+- [x] Testar loading
 
 ---
 
 ## Etapa 5 — Histórico
 
-- [ ] Implementar localStorage
-- [ ] Limitar histórico a 5 registros
-- [ ] Permitir nova consulta através do histórico
+- [x] Implementar localStorage
+- [x] Limitar histórico a 5 registros
+- [x] Permitir nova consulta através do histórico
 
 ---
 
 ## Etapa 6 — Interface
 
-- [ ] Melhorar layout
-- [ ] Responsividade
-- [ ] Estados visuais
-- [ ] Loading
-- [ ] Mensagens de erro
-- [ ] Máscara de CNPJ
-- [ ] Ajustes mobile
+- [x] Melhorar layout
+- [x] Responsividade
+- [x] Estados visuais
+- [x] Loading
+- [x] Mensagens de erro
+- [x] Máscara de CNPJ
+- [x] Ajustes mobile
 
 ---
 
 ## Etapa 7 — Testes
 
-- [ ] Testes do backend
-- [ ] Testes de validação
-- [ ] Testes de erros
+- [x] Testes do backend
+- [x] Testes de validação
+- [x] Testes de erros
 - [ ] Testes do frontend, se houver tempo
 
 ---
 
 ## Etapa 8 — Finalização
 
-- [ ] Revisar código
-- [ ] Remover código desnecessário
-- [ ] Revisar `.gitignore`
-- [ ] Criar `.env.example`
-- [ ] Atualizar README
-- [ ] Executar projeto do zero
-- [ ] Fazer build
-- [ ] Testar novamente
-- [ ] Revisar commits
-- [ ] Subir projeto para GitHub
+- [x] Revisar código
+- [x] Remover código desnecessário
+- [x] Revisar `.gitignore`
+- [x] Criar `.env.example`
+- [x] Atualizar README
+- [x] Executar projeto do zero
+- [x] Fazer build
+- [x] Testar novamente
+- [x] Revisar commits
+- [x] Subir projeto para GitHub
 
 ---
+
+### Observações da execução
+
+- As etapas 1 a 6 foram concluídas e verificadas nos commits e branches do projeto;
+- Os testes do backend, validação e tratamento de erros foram automatizados e aprovados;
+- A interface foi validada manualmente no navegador, mas ainda não há uma suíte automatizada de testes do frontend;
+- A atualização local desta checklist ainda precisa ser enviada ao GitHub;
+- A branch `main` permanece somente com a documentação, conforme a organização atual do repositório.
 
 # 27. Estrutura final esperada
 
