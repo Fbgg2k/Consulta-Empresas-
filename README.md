@@ -33,7 +33,7 @@ O frontend conversa somente com a API do backend; a BrasilAPI nao e acessada dir
 Na raiz do repositorio:
 
 ```bash
-cd frontend
+cd backend
 npm install
 npm run dev
 ```
@@ -88,6 +88,7 @@ atualiza o resultado e registra consultas bem-sucedidas no historico.
 GET {VITE_API_URL}/api/empresas/:cnpj
 ```
 
+O parametro pode conter pontuacao, pois o backend remove caracteres nao numericos antes da validacao.
 Exemplo:
 
 ```bash
