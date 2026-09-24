@@ -1,107 +1,36 @@
-# Consulta de Empresas
+# Frontend - Consulta de Empresas
 
-Aplicação web fullstack para consultar informações públicas de uma empresa através do CNPJ, utilizando a [BrasilAPI](https://brasilapi.com.br/).
-
-## Tecnologias
-
-### Frontend
-
-- React
-- Vite
-- JavaScript
-- CSS responsivo
-- Fetch API
-
-### Backend
-
-- Node.js
-- Express
-- Axios
-- Cors
-- dotenv
-- Nodemon em desenvolvimento
+Aplicacao React criada com Vite para consultar dados publicos de empresas a partir do CNPJ.
+O frontend conversa somente com a API do backend; a BrasilAPI nao e acessada diretamente pelo navegador.
 
 ## Funcionalidades
 
-- Consulta de empresas por CNPJ;
-- Máscara e validação dos dígitos verificadores no frontend e no backend;
-- Integração indireta com a BrasilAPI através de uma API própria;
-- Exibição de razão social, nome fantasia, situação cadastral, CNAE, data de abertura e endereço;
-- Estados de carregamento, sucesso e erro;
-- Histórico das últimas cinco consultas com `localStorage`;
-- Opção de repetir uma consulta a partir do histórico;
-- Interface responsiva para desktop, tablet e mobile;
-- Tratamento de erros com mensagens amigáveis;
-- Endpoint de health check em `/health`.
+- Mascara automatica no formato `00.000.000/0000-00`;
+- Validacao local do CNPJ, incluindo os digitos verificadores;
+- Consulta ao backend com estados de carregamento, sucesso e erro;
+- Exibicao da razao social, nome fantasia, situacao cadastral, CNAE e endereco;
+- Historico das ultimas 5 consultas usando `localStorage`;
+- Reconsulta ao selecionar um item do historico;
+- Layout responsivo para desktop, tablet e mobile.
 
-## Requisitos
+## Tecnologias
 
-- Node.js 20.19+ ou 22.12+;
-- npm 10+;
-- Git para versionamento;
-- acesso à internet para consultar a BrasilAPI.
+- React 19;
+- Vite;
+- JavaScript;
+- CSS;
+- Fetch API;
+- Oxlint.
 
-O projeto foi validado com Node.js 24 e npm 11.
+## Pre-requisitos
 
-Se o Node.js ainda não estiver instalado, uma opção sem alterar pacotes do sistema é usar o nvm:
+- Node.js 20.19 ou superior;
+- npm;
+- Backend em execucao, por padrao em `http://localhost:3001`.
 
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-source ~/.nvm/nvm.sh
-nvm install 24
-nvm use 24
-```
+## Instalacao e execucao
 
-No Linux Mint/Ubuntu, o Git pode ser instalado com:
-
-```bash
-sudo apt update
-sudo apt install git
-```
-
-## Estrutura
-
-```text
-consulta-empresas/
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── utils/
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── .env.example
-│   └── package.json
-├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── errors/
-│   │   ├── middlewares/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   ├── utils/
-│   │   └── app.js
-│   ├── .env.example
-│   ├── package.json
-│   └── server.js
-├── .gitignore
-└── README.md
-```
-
-## Instalação
-
-Clone o repositório e acesse a pasta do projeto:
-
-```bash
-git clone URL_DO_REPOSITORIO
-cd consulta-empresas
-```
-
-### Frontend
-
-Em um terminal:
+Na raiz do repositorio:
 
 ```bash
 cd frontend
@@ -109,57 +38,54 @@ npm install
 npm run dev
 ```
 
-O frontend ficará disponível em `http://localhost:5173`.
-
-### Backend
-
-Em outro terminal:
+Abra `http://localhost:5173` no navegador. O backend deve ser iniciado em outro terminal:
 
 ```bash
 cd backend
-cp .env.example .env
 npm install
 npm run dev
 ```
 
-O backend ficará disponível em `http://localhost:3001`.
+## Scripts disponiveis
 
-> No Windows, o comando para criar o arquivo local pode ser `copy .env.example .env`.
+| Comando | Descricao |
+| --- | --- |
+| `npm run dev` | Inicia o servidor de desenvolvimento do Vite |
+| `npm run build` | Gera a versao de producao em `dist/` |
+| `npm run preview` | Serve localmente o build de producao |
+| `npm run lint` | Executa o Oxlint |
 
-## Variáveis de ambiente
+## Variaveis de ambiente
 
-### Backend
-
-O arquivo `backend/.env` deve conter:
-
-```env
-PORT=3001
-BRASIL_API_URL=https://brasilapi.com.br/api/cnpj/v1
-FRONTEND_URL=http://localhost:5173
-```
-
-- `PORT`: porta usada pelo servidor;
-- `BRASIL_API_URL`: endereço base da BrasilAPI;
-- `FRONTEND_URL`: origem autorizada pelo CORS. múltiplas URLs podem ser separadas por vírgula.
-
-O arquivo `.env` não deve ser enviado ao Git. O arquivo `.env.example` é a versão segura para documentar as variáveis.
-
-### Frontend
-
-O arquivo `frontend/.env` pode ser criado com:
+O frontend usa `http://localhost:3001` quando `VITE_API_URL` nao estiver definida.
+Para apontar para outro backend, crie um arquivo `.env` nesta pasta:
 
 ```env
 VITE_API_URL=http://localhost:3001
 ```
 
-Se não for definido, o frontend usará `http://localhost:3001` como padrão durante o desenvolvimento.
+Depois de alterar uma variavel, reinicie o servidor do Vite.
 
-## API
+## Organizacao do codigo
 
-### Consultar empresa
+```text
+src/
+├── components/       Componentes de interface reutilizaveis
+├── pages/            Paginas da aplicacao
+├── services/         Comunicacao com a API do backend
+├── utils/            Validacao, mascara e historico do CNPJ
+├── App.jsx           Componente raiz
+├── main.jsx          Ponto de entrada do React
+└── index.css         Estilos globais e responsividade
+```
+
+O fluxo principal esta em `src/pages/Home.jsx`: valida o valor informado, solicita a empresa ao backend,
+atualiza o resultado e registra consultas bem-sucedidas no historico.
+
+## API consumida
 
 ```http
-GET /api/empresas/:cnpj
+GET {VITE_API_URL}/api/empresas/:cnpj
 ```
 
 Exemplo:
@@ -168,86 +94,44 @@ Exemplo:
 curl http://localhost:3001/api/empresas/27865757000102
 ```
 
-O backend normaliza e valida o CNPJ antes de consultar a BrasilAPI. Uma resposta de sucesso possui o formato:
+Em caso de sucesso, o backend retorna os dados dentro da propriedade `empresa`:
 
 ```json
 {
-  "empresa": {
-    "razao_social": "...",
-    "nome_fantasia": "...",
-    "situacao_cadastral": "ATIVA"
-  }
+	"empresa": {
+		"razao_social": "Empresa Exemplo LTDA",
+		"nome_fantasia": "Empresa Exemplo",
+		"descricao_situacao_cadastral": "ATIVA"
+	}
 }
 ```
 
-### Health check
-
-```http
-GET /health
-```
-
-## Tratamento de erros
-
-| Status | Código | Situação |
-| --- | --- | --- |
-| `400` | `INVALID_CNPJ` | CNPJ inválido |
-| `404` | `COMPANY_NOT_FOUND` | Empresa não encontrada na BrasilAPI |
-| `404` | `ROUTE_NOT_FOUND` | Rota inexistente no backend |
-| `502` | `BRASILAPI_ERROR` | Resposta inesperada da BrasilAPI |
-| `503` | `BRASILAPI_UNAVAILABLE` | BrasilAPI indisponível ou timeout |
-
-Formato de erro:
+Erros seguem o formato:
 
 ```json
 {
-  "error": {
-    "code": "INVALID_CNPJ",
-    "message": "CNPJ inválido. Informe um CNPJ válido."
-  }
+	"error": {
+		"code": "INVALID_CNPJ",
+		"message": "CNPJ invalido. Informe um CNPJ valido."
+	}
 }
 ```
 
-## Histórico
+O frontend apresenta a mensagem recebida e trata tambem falhas de rede quando o backend nao esta disponivel.
 
-As consultas bem-sucedidas são armazenadas no navegador com a chave `historicoCnpj`. O histórico:
+## Historico
 
-- mantém apenas os cinco CNPJs mais recentes;
-- remove duplicatas;
-- atualiza a posição de um CNPJ quando ele é consultado novamente;
-- permite iniciar uma nova consulta ao clicar em um item.
+As consultas validas sao armazenadas no navegador com a chave `historicoCnpj`.
+O item mais recente fica no inicio da lista, CNPJs repetidos sao reposicionados e a lista e limitada a cinco itens.
+Nenhum dado de autenticacao ou informacao sensivel e armazenado.
 
-## Scripts
-
-Frontend:
+## Build de producao
 
 ```bash
-npm run dev
+npm run lint
 npm run build
 npm run preview
-npm run lint
 ```
 
-Backend:
-
-```bash
-npm run dev
-npm start
-npm test
-```
-
-## Decisões técnicas
-
-- O frontend consome a API própria para manter a BrasilAPI fora do navegador e centralizar validação e tratamento de erros.
-- O CNPJ é validado no frontend para melhorar a experiência e no backend para garantir a segurança da API.
-- A primeira versão não utiliza banco de dados, conforme o escopo.
-- O histórico é local ao navegador porque não há autenticação nem dados sensíveis.
-- A organização separa controllers, rotas, serviços, utilitários e middlewares no backend; no frontend, separa componentes, páginas, serviços e utilitários.
-
-## Melhorias futuras
-
-- testes automatizados com Vitest e Supertest;
-- cache de respostas;
-- banco de dados para histórico persistente;
-- autenticação e histórico por usuário;
-- deploy do backend e do frontend;
-- paginação ou filtros adicionais.
+O build gerado em `dist/` pode ser publicado em um servidor estatico. Nesse ambiente,
+configure `VITE_API_URL` antes da compilacao para apontar para a API publicada.
